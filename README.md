@@ -69,7 +69,50 @@ gcloud config configurations activate YOUR_PROJECT_ID
 gsutil -m rsync -r dist gs://YOUR_BUCKET_NAME
 ```
 
+##（オプション）カスタムドメインの設定
+静的ウェブサイトを独自のドメインで公開したい場合、以下の手順で設定します。
 
+1.ロードバランサの作成
+- Cloud Load Balancing を使用して、HTTPS ロードバランサを作成します。
+- バックエンドサービス：先ほど作成した Cloud Storage バケットを指定。
+- フロントエンド設定：使用したいカスタムドメインとポート（通常はポート443）を指定。
+
+2.SSL証明書の設定
+- Certificate Manager を使用して、カスタムドメインのSSL証明書を取得します。
+- GCPのマネージドSSL証明書を使用することで、自動的に証明書が発行されます。
+
+3.DNSの設定
+- ドメインのDNS設定で、ロードバランサのIPアドレスに向けてAレコードを設定します。
+
+- 例：  
+  | ドメイン              | レコードタイプ | 値                           |
+  |--------------------|------------|------------------------------|
+  | yourdomain.com.    | A          | [ロードバランサのIPアドレス]         |
+  | www.yourdomain.com.| CNAME      | yourdomain.com.              |
+
+4.確認
+- SSL証明書の反映には時間がかかる場合があります（通常は最大24時間）。
+- カスタムドメインにアクセスし、ウェブサイトが正しく表示されることを確認します。
+
+ネットワーク構成図
+```mermaid
+graph LR
+    subgraph インターネット
+        A[ユーザーのブラウザ]
+        A -->|"アクセス\nyourdomain.com"| B[DNSサーバー]
+        B -->|"Aレコードでロードバランサの\nIPアドレスを返す"| C[HTTPSロードバランサ]
+    end
+
+    subgraph GCP上の設定
+        C -->|"SSL/TLS接続\n(443ポート)"| C
+        C -->|"フロントエンド:\nyourdomain.com"| D["SSL証明書\n(Certificate Manager)"]
+        C -->|"バックエンドサービス"| E["Cloud Storage バケット\n(ウェブサイトコンテンツ)"]
+    end
+
+    style C fill:#B3DDF2,stroke:#333,stroke-width:2px
+    style D fill:#FFE4B5,stroke:#333,stroke-width:2px
+    style E fill:#B3D9B1,stroke:#333,stroke-width:2px
+```
 
 # Cloud Build デプロイ
 1. ソースリポジトリとの接続
