@@ -109,9 +109,6 @@ graph LR
         C -->|"バックエンドサービス"| E["Cloud Storage バケット\n(ウェブサイトコンテンツ)"]
     end
 
-    style C fill:#B3DDF2,stroke:#333,stroke-width:2px
-    style D fill:#FFE4B5,stroke:#333,stroke-width:2px
-    style E fill:#B3D9B1,stroke:#333,stroke-width:2px
 ```
 
 # Cloud Build デプロイ
