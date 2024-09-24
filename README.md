@@ -72,6 +72,10 @@ gsutil -m rsync -r dist gs://YOUR_BUCKET_NAME
 ##（オプション）カスタムドメインの設定
 静的ウェブサイトを独自のドメインで公開したい場合、以下の手順で設定します。
 
+0.ドメインの取得
+Cloud Domainsを使用して、カスタムドメインを取得する
+ref: https://qiita.com/ichi_system/items/c27964b3efedb2e18371
+
 1.ロードバランサの作成
 - Cloud Load Balancing を使用して、HTTPS ロードバランサを作成します。
 - バックエンドサービス：先ほど作成した Cloud Storage バケットを指定。
