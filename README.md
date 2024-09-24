@@ -76,6 +76,9 @@ gsutil -m rsync -r dist gs://YOUR_BUCKET_NAME
 Cloud Domainsを使用して、カスタムドメインを取得する
 ref: https://qiita.com/ichi_system/items/c27964b3efedb2e18371
 
+以下の1~4の説明は間違いかも.
+こっちを参考にする: https://cloud.google.com/load-balancing/docs/https/ext-load-balancer-backend-buckets?hl=ja#ssl-cert
+
 1.ロードバランサの作成
 - Cloud Load Balancing を使用して、HTTPS ロードバランサを作成します。
 - バックエンドサービス：先ほど作成した Cloud Storage バケットを指定。
