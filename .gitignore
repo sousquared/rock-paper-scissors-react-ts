@@ -23,3 +23,11 @@ dist-ssr
 *.sln
 *.sw?
 
+# Terraform関連のファイル
+*.tfstate
+*.tfstate.*
+*.tfvars
+.terraform/
+terraform.tfstate.backup
+.terraformrc
+terraform.rc
